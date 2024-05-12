@@ -10,4 +10,4 @@ APIs:
 - Update profile
 - Get all profile
 
-Endpoint for documentation - [text](https://voosh-backend-1.onrender.com/docs/)
+Endpoint for documentation - [Link](https://voosh-backend-1.onrender.com/docs/)
