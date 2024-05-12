@@ -1,0 +1,370 @@
+openapi: 3.0.0
+info:
+  title: Voosh backend API
+  description: To add user and update it's information
+  contact:
+    email: ayushsrivastav11@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/AyushSrivastav/voosh/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://voosh-backend-k6nv.onrender.com
+  description: Voosh Backend
+tags:
+- name: Authentication
+  description: To create or login user
+- name: Profile
+  description: To do all operation on profile
+paths:
+  /auth/register:
+    summary: To create a new user
+    post:
+      tags:
+      - Authentication
+      description: |
+        To create a new users with all information related to the user like name, email id, password, bio, phone, isAdmin, isPublic
+      operationId: authRegisterPOST
+      requestBody:
+        description: All parameter to create user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        "201":
+          description: Successfully registered user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+        "500":
+          description: User is not registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      x-swagger-router-controller: Authentication
+  /auth/login:
+    summary: To login into an existing user
+    post:
+      tags:
+      - Authentication
+      description: |
+        To login into an account of an existing by providing authentication token in response which can be used in other APIs
+      operationId: authLoginPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth_login_body'
+      responses:
+        "200":
+          description: User authenticated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "401":
+          description: User is not found in the database
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "404":
+          description: Password provided is wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        "500":
+          description: Error while doing operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      x-swagger-router-controller: Authentication
+  /profile:
+    summary: To either get users profile information or update information for user
+    get:
+      tags:
+      - Profile
+      description: |
+        To get users information
+      operationId: profileGET
+      responses:
+        "200":
+          description: User information found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "500":
+          description: Error while doing operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_2'
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Profile
+    put:
+      tags:
+      - Profile
+      description: |
+        To update users information
+      operationId: profilePUT
+      requestBody:
+        description: To update user info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_response'
+      responses:
+        "200":
+          description: User information found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "500":
+          description: Error while doing operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_2'
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Profile
+  /profile/all:
+    summary: To fetch all users visible to current user
+    post:
+      tags:
+      - Profile
+      description: |
+        To create a new users with all information related to the user like name, email id, password, bio, phone, isAdmin, isPublic
+      operationId: profileAllPOST
+      responses:
+        "200":
+          description: User information found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "500":
+          description: Error while doing operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_2'
+      security:
+      - bearerAuth: []
+      x-swagger-router-controller: Profile
+components:
+  schemas:
+    user:
+      required:
+      - email
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          example: Widget Adapter
+        email:
+          type: string
+          example: sample@testing.com
+        password:
+          type: string
+        bio:
+          type: string
+          example: Any text
+        phone:
+          type: string
+          example: "1234567890"
+        photo:
+          type: string
+          example: https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png
+        isAdmin:
+          type: boolean
+        isPublic:
+          type: boolean
+    user_response:
+      type: object
+      properties:
+        username:
+          type: string
+          example: Widget Adapter
+        email:
+          type: string
+          example: sample@testing.com
+        bio:
+          type: string
+          example: Any text
+        phone:
+          type: string
+          example: "1234567890"
+        photo:
+          type: string
+          example: https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png
+        isPublic:
+          type: boolean
+      example:
+        phone: "1234567890"
+        bio: Any text
+        photo: https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png
+        isPublic: true
+        email: sample@testing.com
+        username: Widget Adapter
+    inline_response_201:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        message:
+          type: string
+          example: User registered successfully
+      example:
+        message: User registered successfully
+        status: success
+    inline_response_500:
+      type: object
+      properties:
+        status:
+          type: string
+          example: failed
+        message:
+          type: string
+          example: Error registering user
+    auth_login_body:
+      type: object
+      properties:
+        email:
+          type: string
+          example: sample@testing.com
+        password:
+          type: string
+          example: string
+    inline_response_200:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        message:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....
+      example:
+        message: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....
+        status: success
+    inline_response_401:
+      type: object
+      properties:
+        status:
+          type: string
+          example: failed
+        message:
+          type: string
+          example: User not found
+    inline_response_404:
+      type: object
+      properties:
+        status:
+          type: string
+          example: failed
+        message:
+          type: string
+          example: Invalid password
+    inline_response_500_1:
+      type: object
+      properties:
+        status:
+          type: string
+          example: failed
+        message:
+          type: string
+          example: Error logging in
+    inline_response_200_1:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        result:
+          $ref: '#/components/schemas/user_response'
+      example:
+        result:
+          phone: "1234567890"
+          bio: Any text
+          photo: https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png
+          isPublic: true
+          email: sample@testing.com
+          username: Widget Adapter
+        status: success
+    inline_response_500_2:
+      type: object
+      properties:
+        status:
+          type: string
+          example: failed
+        message:
+          type: string
+          example: Error fetching profile
+    inline_response_200_2:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        message:
+          type: string
+          example: Profile updated successfully
+      example:
+        message: Profile updated successfully
+        status: success
+    inline_response_200_3:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/user_response'
+      example:
+        result:
+        - phone: "1234567890"
+          bio: Any text
+          photo: https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png
+          isPublic: true
+          email: sample@testing.com
+          username: Widget Adapter
+        - phone: "1234567890"
+          bio: Any text
+          photo: https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png
+          isPublic: true
+          email: sample@testing.com
+          username: Widget Adapter
+        status: success
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

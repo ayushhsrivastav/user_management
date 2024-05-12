@@ -15,7 +15,7 @@ router.put(
   profileController.updateProfile
 );
 router.get(
-  "/admin/profiles",
+  "/profile/all",
   authMiddleware.authenticateToken,
   profileController.getAllProfiles
 );

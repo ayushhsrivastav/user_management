@@ -9,10 +9,11 @@ class profileController {
           .status(404)
           .send({ status: "sucess", message: "User not found" });
       }
-      const { photo, name, bio, phone, email } = user;
+      const { photo, name, bio, phone, email, username } = user;
       res.json({
         status: "success",
         result: {
+          username,
           photo,
           name,
           bio,
@@ -31,8 +32,9 @@ class profileController {
 
   async updateProfile(req, res) {
     try {
-      const { photo, name, bio, phone, email, isPublic } = req.body;
+      const { photo, name, bio, phone, email, isPublic, username } = req.body;
       const query = {};
+      if (username) query.username = username;
       if (photo) query.photo = photo;
       if (name) query.name = name;
       if (bio) query.bio = bio;
@@ -71,6 +73,7 @@ class profileController {
         status: "success",
         message: "Profiles fetched successfully",
         result: profiles.map((profile) => ({
+          username: profile.username,
           photo: profile.photo,
           name: profile.name,
           bio: profile.bio,
