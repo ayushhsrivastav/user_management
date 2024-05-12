@@ -1,12 +1,13 @@
 // app.js
 
 const express = require("express");
+const config = require("./config/config");
 const { connectDB } = require("./config/db");
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = config.port || 3000;
 
 connectDB();
 
