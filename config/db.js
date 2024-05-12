@@ -1,6 +1,5 @@
 const { MongoClient } = require("mongodb");
 const config = require("./config");
-console.log(config.db_string);
 
 const client = new MongoClient(config.db_string);
 
