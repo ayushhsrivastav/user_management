@@ -11,12 +11,15 @@ class profileController {
       }
       const { photo, name, bio, phone, email } = user;
       res.json({
-        photo,
-        name,
-        bio,
-        phone,
-        email,
-        isPublic: user.isPublic,
+        status: "success",
+        result: {
+          photo,
+          name,
+          bio,
+          phone,
+          email,
+          isPublic: user.isPublic,
+        },
       });
     } catch (error) {
       console.error(error);
