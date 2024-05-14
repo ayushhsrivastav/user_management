@@ -1,4 +1,4 @@
-# VOOSH BACKEND
+# USER MANAGEMENT
 
 Used to create or update user details.
 
