@@ -10,4 +10,4 @@ APIs:
 - Update profile
 - Get all profile
 
-Endpoint for documentation - [Link](https://voosh-backend-1.onrender.com/docs/)
+Endpoint for documentation - [Link](https://swagger-docs-ld2d.onrender.com/docs/)
