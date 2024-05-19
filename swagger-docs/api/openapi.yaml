@@ -11,7 +11,7 @@ info:
 servers:
   - url: https://virtserver.swaggerhub.com/AyushSrivastav/user_management/1.0.0
     description: SwaggerHub API Auto Mocking
-  - url: https://voosh-backend-k6nv.onrender.com
+  - url: https://user-management-x3bh.onrender.com
     description: User Management Backend
 tags:
   - name: Authentication
