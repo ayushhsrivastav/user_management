@@ -6,7 +6,7 @@ class authMiddleware {
     if (!token)
       return res.status(401).send("Access denied. No token provided.");
     if (token.includes("Bearer ")) token = token.replace("Bearer ", "");
-    jwt.verify(token, "voosh", (err, decoded) => {
+    jwt.verify(token, "user", (err, decoded) => {
       if (err) return res.status(403).send("Invalid token.");
       req.userId = decoded.userId;
       next();

@@ -1,11 +1,11 @@
 {
-  "name": "voosh-backend-api",
+  "name": "user_management",
   "version": "1.0.0",
   "description": "To add user and update it's information",
   "main": "index.js",
   "scripts": {
-	"prestart": "npm install",
-	"start": "node index.js"
+    "prestart": "npm install",
+    "start": "node index.js"
   },
   "keywords": [
     "swagger"
